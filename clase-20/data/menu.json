@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "title": "Carpaccio fresco",
+    "description": "Entrada Carpaccio de salmón con cítricos",
+    "image": "/images/Carpaccio-de-salmon.jpg",
+    "price": {
+      "currency": "U$S",
+      "amount": 65.50
+    }
+  }, {
+    "id": 2,
+    "title": "Risotto de berenjena",
+    "description": "Risotto de berenjena y queso de cabra",
+    "image": "/images/Risotto-berenjena-queso-cabra.jpg",
+    "price": {
+      "currency": "U$S",
+      "amount": 47.00
+    }
+  }, {
+    "id": 3,
+    "title": "Mousse de arroz",
+    "description": "Mousse de arroz con leche y aroma de azahar U$S 27.50",
+    "image": "/images/Mousse-de-arroz-con-leche.jpg",
+    "price": {
+      "currency": "U$S",
+      "amount": 47.00
+    }
+  }, {
+    "id": 4,
+    "title": "Espárragos blancos",
+    "description": "Espárragos blancos con vinagreta de verduras y jamón ibérico",
+    "image": "/images/esparragos.png",
+    "price": {
+      "currency": "U$S",
+      "amount": 37.50
+    }
+  }, {
+    "id": 5,
+    "title": "Milanesas con pure",
+    "image": "/images/milanesas-con-pure.jpg",
+    "price": {
+      "currency": "U$S",
+      "amount": 24.75
+    }
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "name": "dh-patron-mvc",
+  "version": "1.0.0",
+  "description": "DH Patron MVN",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comodinx/dh-patron-mvc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/comodinx/dh-patron-mvc/issues"
+  },
+  "homepage": "https://github.com/comodinx/dh-patron-mvc#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

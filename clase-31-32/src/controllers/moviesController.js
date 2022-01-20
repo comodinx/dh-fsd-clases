@@ -1,6 +1,7 @@
 'use strict';
 
 const { validationResult } = require('express-validator');
+const { formatSequelize } = require('../helpers/errors');
 const { formatDate } = require('../helpers/date');
 const db = require('../database/models');
 
@@ -59,7 +60,7 @@ module.exports = {
             return res.status(400).render('moviesAdd', {
                 errors: [{
                     param: 'general',
-                    msg: e.sqlMessage || e.message
+                    msg: formatSequelize(e)
                 }],
                 old: req.body
             });
@@ -109,9 +110,44 @@ module.exports = {
             return res.status(400).render('moviesEdit', {
                 errors: [{
                     param: 'general',
-                    msg: e.sqlMessage || e.message
+                    msg: formatSequelize(e)
                 }],
                 old: req.body
+            });
+        }
+    },
+    destroy: async (req, res) => {
+        // Normalize body
+        const { id } = req.params;
+        let movie;
+
+        try {
+            // Try to get movie
+            movie = await db.Movies.findByPk(id);
+        }
+        catch (e) {
+            console.error('Error on destroy movie', e);
+            // Redirect to movie details
+            res.status(404).redirect(`/movies/detail/${id}`);
+        }
+
+        try {
+            // Try to destroy movie
+            await db.Movies.destroy({
+                where: { id }
+            });
+
+            // Redirect to movies
+            res.redirect('/movies');
+        }
+        catch (e) {
+            console.error('Error on destroy movie', e);
+            return res.status(500).render('moviesDetail', {
+                errors: [{
+                    param: 'general',
+                    msg: formatSequelize(e)
+                }],
+                movie
             });
         }
     }

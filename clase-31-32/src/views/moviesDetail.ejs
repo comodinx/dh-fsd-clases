@@ -16,13 +16,31 @@
 
         <div class="header-actions">
             <a href="/movies/edit/<%= movie.id %>">edit</a>
+            <a href="#" onclick="destroyMovie(<%= movie.id %>)">delete</a>
+            <form id="movies-delete-form" action="/movies/delete/<%= movie.id %>?_method=DELETE" method="POST"></form>
         </div>
     </div>
     <br>
+
+    <% if (locals.errors && locals.errors.length) { %>
+        <h4><b>Errors</b></h4>
+        <ul>
+        <% errors.forEach(e => { %>
+            <li>
+                <p>
+                    <b><%= e.param %></b>: <%= e.msg %>
+                </p>
+            </li>
+        <% }); %>
+        </ul>
+        <br>
+    <% } %>
+
     <p>RATING: <%= movie.rating %> </p>
     <p>AWARDS: <%= movie.awards %> </p>
     <p>LENGTH: <%= movie.length + ' min'%> </p>
     <p>RELEASE DATE: <%= movie.release_date %> </p>
 
+    <script src='/js/script.js' ></script>
 </body>
 </html>

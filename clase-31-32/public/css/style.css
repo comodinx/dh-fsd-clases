@@ -17,3 +17,17 @@ img{
 figure{
   width: 20%;
 }
+
+.header {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.header .header-actions {
+  margin-left: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  float: left;
+}

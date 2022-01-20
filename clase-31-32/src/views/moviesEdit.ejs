@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= movie.title %> </title>
+    <link rel='stylesheet' href='/css/style.css' />
+
+</head>
+<body>
+    <figure>
+        <img src="/img/logo-DH.png" alt="Logo Digital House">
+    </figure>
+    <br>
+    <h1>Edit Movie :: <%= movie.title %></h1>
+    <br>
+
+    <% if (locals.errors && locals.errors.length) { %>
+        <h4><b>Errors</b></h4>
+        <ul>
+        <% errors.forEach(e => { %>
+            <li>
+                <p>
+                    <b><%= e.param %></b>: <%= e.msg %>
+                </p>
+            </li>
+        <% }); %>
+        </ul>
+        <br>
+    <% } %>
+
+    <form action="/movies/update/<%= movie.id %>?_method=PUT" method="POST">
+        <p>TITLE: <input type="text" name="title" placeholder="Avatar" value="<%= movie.title %>" required> </p>
+        <p>RATING: <input type="text" name="rating" placeholder="7.5" value="<%= movie.rating %>" required> </p>
+        <p>AWARDS: <input type="number" name="awards" placeholder="0" value="<%= movie.awards %>" required> </p>
+        <p>LENGTH: <input type="number" name="length" placeholder="1234" value="<%= movie.length %>" required> </p>
+        <p>RELEASE DATE: <input type="date" name="release_date" placeholder="10/05/2021" value="<%= movie.release_date %>" required> </p>
+        <br>
+        <hr>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

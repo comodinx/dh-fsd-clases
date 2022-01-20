@@ -11,7 +11,13 @@
     <figure>
         <img src="/img/logo-DH.png" alt="Logo Digital House">
     </figure>
-    <h1><%= movie.title %> </h1>    
+    <div class="header">
+        <h1><%= movie.title %></h1>
+
+        <div class="header-actions">
+            <a href="/movies/edit/<%= movie.id %>">edit</a>
+        </div>
+    </div>
     <br>
     <p>RATING: <%= movie.rating %> </p>
     <p>AWARDS: <%= movie.awards %> </p>

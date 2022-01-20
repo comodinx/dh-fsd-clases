@@ -1,12 +1,33 @@
 'use strict';
 
 const { validationResult } = require('express-validator');
+const { formatDate } = require('../helpers/date');
 const db = require('../database/models');
 
 module.exports = {
     list: async (req, res) => {
         res.render('moviesList', {
             movies: (await db.Movies.findAll())
+        });
+    },
+    new: async (req, res) => {
+        res.render('newestMovies', {
+            movies: (await db.Movies.findAll({
+                order: [['release_date', 'DESC']]
+            }))
+        });
+    },
+    recomended: async (req, res) => {
+        res.render('recommendedMovies', {
+            movies: (await db.Movies.findAll({
+                order: [['rating', 'DESC']],
+                limit: 5
+            }))
+        });
+    },
+    detail: async (req, res) => {
+        res.render('moviesDetail', {
+            movie: (await db.Movies.findByPk(req.params.id))
         });
     },
     add: async (req, res) => {
@@ -29,10 +50,12 @@ module.exports = {
         try {
             // Try to insert movie
             await db.Movies.create({ title, rating, awards, length, release_date });
+
+            // Redirect to movies
             res.redirect('/movies');
         }
         catch (e) {
-            console.error('Error on create product', e);
+            console.error('Error on create movie', e);
             return res.status(400).render('moviesAdd', {
                 errors: [{
                     param: 'general',
@@ -42,24 +65,54 @@ module.exports = {
             });
         }
     },
-    new: async (req, res) => {
-        res.render('newestMovies', {
-            movies: (await db.Movies.findAll({
-                order: [['release_date', 'DESC']]
-            }))
-        });
+    edit: async (req, res) => {
+        const movie = await db.Movies.findByPk(req.params.id, { raw: true });
+
+        movie.release_date = formatDate(movie.release_date.toISOString());
+
+        res.render('moviesEdit', { movie });
     },
-    recomended: async (req, res) => {
-        res.render('recommendedMovies', {
-            movies: (await db.Movies.findAll({
-                order: [['rating', 'DESC']],
-                limit: 5
-            }))
-        });
-    },
-    detail: async (req, res) => {
-        res.render('moviesDetail', {
-            movie: (await db.Movies.findByPk(req.params.id))
-        });
+    update: async (req, res) => {
+        // Normalize body
+        const { id } = req.params;
+
+        // Check errors
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render('moviesEdit', {
+                errors: errors.array(),
+                movie: {
+                    id,
+                    ...req.body
+                }
+            });
+        }
+
+        // Normalize body
+        const { title, rating, awards, length, release_date } = req.body;
+
+        try {
+            // Try to get movie
+            await db.Movies.findByPk(id);
+
+            // Try to update movie
+            await db.Movies.update({ title, rating, awards, length, release_date }, {
+                where: { id }
+            });
+
+            // Redirect to movies
+            res.redirect('/movies');
+        }
+        catch (e) {
+            console.error('Error on update movie', e);
+            return res.status(400).render('moviesEdit', {
+                errors: [{
+                    param: 'general',
+                    msg: e.sqlMessage || e.message
+                }],
+                old: req.body
+            });
+        }
     }
 };

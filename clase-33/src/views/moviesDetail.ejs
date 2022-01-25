@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= movie.title %> </title>
+    <link rel='stylesheet' href='/css/style.css' />
+
+</head>
+<body>
+    <figure>
+        <img src="/img/logo-DH.png" alt="Logo Digital House">
+    </figure>
+    <h1><%= movie.title %></h1>
+    <br>
+
+    <% if (locals.errors && locals.errors.length) { %>
+        <h4><b>Errors</b></h4>
+        <ul>
+        <% errors.forEach(e => { %>
+            <li>
+                <p>
+                    <b><%= e.param %></b>: <%= e.msg %>
+                </p>
+            </li>
+        <% }); %>
+        </ul>
+        <br>
+    <% } %>
+
+    <p>RATING: <%= movie.rating %> </p>
+    <p>AWARDS: <%= movie.awards %> </p>
+    <p>LENGTH: <%= movie.length + ' min'%> </p>
+    <p>RELEASE DATE: <%= movie.release_date %> </p>
+    <br>
+    <section>
+        <!--Aquí debe colocar los botones de Modificar - Borrar y Listado de Películas-->
+        <a href="/movies/edit/<%= movie.id %>">📝 Editar</a>
+        <a href="#" onclick="destroyMovie(<%= movie.id %>)" style="margin-left:15px;">🗑 Borrar</a>
+        <form id="movies-delete-form" action="/movies/delete/<%= movie.id %>?_method=DELETE" method="POST"></form>
+    </section>
+
+    <script src='/js/script.js' ></script>
+
+</body>
+</html>

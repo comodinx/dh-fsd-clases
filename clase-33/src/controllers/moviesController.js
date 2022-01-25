@@ -95,7 +95,7 @@ const moviesController = {
     edit: function(req,res) {
         const { id } = req.params;
         const promises = [
-            db.Movie.findByPk(id, { include: ['genre'] }),
+            db.Movie.findByPk(id, { include: ['genre', 'actors'] }),
             db.Genre.findAll()
         ];
 
@@ -103,6 +103,7 @@ const moviesController = {
             .all(promises)
             .then(([movie, allGenres]) => {
                 movie.release_date = formatDate(movie.release_date.toISOString());
+                console.log(movie)
 
                 res.render('moviesEdit', { Movie: movie, allGenres });
             })

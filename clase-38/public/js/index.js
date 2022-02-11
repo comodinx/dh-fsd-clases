@@ -35,19 +35,21 @@ window.onload = function(){
 }
 
 function microdesafio1 () {
+    const menu = document.getElementById('menu');
+
     //
     // ● En index.ejs, agregar un evento para que cada vez que el usuario haga clic sobre el
     //   logo de Digital House se muestre el menú lateral con id="menu". El estilo y el menú
     //   lateral ya existe en el proyecto de base. Tips: podemos usar el atributo classList
     //   con el método toggle para agregar o quitar la clase class="menu".
     document.querySelector('.logoDH').addEventListener('click', () => {
-        document.getElementById('menu').classList.toggle('menu');
+        menu.classList.toggle('mostrar');
     });
 
     //
     // ● En index.ejs, agregar un evento que permita ocultar el menú lateral cuando el
     //   mouse deje el área del menú.
-    document.getElementById('menu').addEventListener('mouseout', () => {
-        this.classList.remove('menu');
+    menu.addEventListener('mouseout', () => {
+        menu.classList.remove('mostrar');
     });
 }
